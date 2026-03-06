@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold: #A68966;
+  --color-charcoal: #2C2C2C;
+  --color-cream: #F9F7F5;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Montserrat", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-charcoal font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gold text-white px-8 py-3 uppercase tracking-widest text-xs font-semibold transition-all duration-300 hover:bg-gold/90;
+  }
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+}
