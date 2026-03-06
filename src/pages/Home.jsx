@@ -14,7 +14,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/rooms');
+                const res = await axios.get(`${import.meta.env.VITE_API_URI}/api/rooms`);
                 setRooms(res.data);
             } catch (err) {
                 console.error("Error fetching data:", err);

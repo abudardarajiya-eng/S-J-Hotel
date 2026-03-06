@@ -16,7 +16,7 @@ const LoginPage = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const res = await axios.post(`${import.meta.env.VITE_API_URI}/api/auth/login`, formData);
             localStorage.setItem('adminToken', res.data.token);
             navigate('/admin');
         } catch (err) {

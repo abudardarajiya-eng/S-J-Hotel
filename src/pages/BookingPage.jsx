@@ -5,6 +5,7 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 
+
 const BookingPage = () => {
     const [searchParams] = useSearchParams();
     const [rooms, setRooms] = useState([]);
@@ -26,7 +27,7 @@ const BookingPage = () => {
 
     const fetchOccupiedDates = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/bookings/occupied-dates');
+            const res = await axios.get(`${import.meta.env.VITE_API_URI}/api/bookings/occupied-dates`);
             setBookings(res.data);
         } catch (err) {
             console.error("Error fetching occupied dates:", err);
@@ -37,7 +38,7 @@ const BookingPage = () => {
         const fetchData = async () => {
             try {
                 const [roomRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/rooms'),
+                    axios.get(`${import.meta.env.VITE_API_URI}/api/rooms`),
                     fetchOccupiedDates()
                 ]);
                 setRooms(roomRes.data);
@@ -88,7 +89,7 @@ const BookingPage = () => {
         }
 
         try {
-            const res = await axios.post('http://localhost:5000/api/bookings', {
+            const res = await axios.post(`${process.env.VITE_API_URI}/api/bookings`, {
                 roomId: selectedRoom._id,
                 ...bookingData,
                 checkIn: searchDates.checkIn,

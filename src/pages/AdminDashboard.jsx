@@ -33,9 +33,9 @@ const AdminDashboard = () => {
             try {
                 const config = { headers: { Authorization: `Bearer ${token}` } };
                 const [bookingRes, inquiryRes, roomRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/bookings', config),
-                    axios.get('http://localhost:5000/api/inquiries', config),
-                    axios.get('http://localhost:5000/api/rooms', config)
+                    axios.get(`${import.meta.env.VITE_API_URI}/api/bookings`, config),
+                    axios.get(`${import.meta.env.VITE_API_URI}/api/inquiries`, config),
+                    axios.get(`${import.meta.env.VITE_API_URI}/api/rooms`, config)
                 ]);
                 setBookings(bookingRes.data);
                 setInquiries(inquiryRes.data);
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
     const updateStatus = async (id, status) => {
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.patch(`http://localhost:5000/api/bookings/${id}`, { status }, config);
+            await axios.patch(`${import.meta.env.VITE_API_URI}/api/bookings/${id}`, { status }, config);
             setBookings(bookings.map(b => b._id === id ? { ...b, status } : b));
         } catch (err) {
             alert("Error updating status");
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
         if (!window.confirm("Are you sure you want to delete this room?")) return;
         try {
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.delete(`http://localhost:5000/api/rooms/${id}`, config);
+            await axios.delete(`${import.meta.env.VITE_API_URI}/api/rooms/${id}`, config);
             setRooms(rooms.filter(r => r._id !== id));
         } catch (err) {
             alert("Error deleting room");
@@ -79,10 +79,10 @@ const AdminDashboard = () => {
             const payload = { ...roomForm, amenities: roomForm.amenities.split(',').map(a => a.trim()) };
             
             if (editingRoom) {
-                const res = await axios.put(`http://localhost:5000/api/rooms/${editingRoom._id}`, payload, config);
+                const res = await axios.put(`${import.meta.env.VITE_API_URI}/api/rooms/${editingRoom._id}`, payload, config);
                 setRooms(rooms.map(r => r._id === editingRoom._id ? res.data : r));
             } else {
-                const res = await axios.post('http://localhost:5000/api/rooms', payload, config);
+                const res = await axios.post(`${import.meta.env.VITE_API_URI}/api/rooms`, payload, config);
                 setRooms([...rooms, res.data]);
             }
             setIsRoomModalOpen(false);

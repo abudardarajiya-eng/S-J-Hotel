@@ -17,7 +17,7 @@ const InquiryForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-        await axios.post('http://localhost:5000/api/inquiries', {
+        await axios.post(`${import.meta.env.VITE_API_URI}/api/inquiries`, {
             name: `${formData.firstName} ${formData.lastName}`,
             email: formData.email,
             phone: 'Not provided',
