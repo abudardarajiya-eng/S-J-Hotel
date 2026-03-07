@@ -3,11 +3,12 @@ import Navbar from '../components/Navbar';
 import { Calendar, Users, Coffee, ShieldCheck, Star } from 'lucide-react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 
 const BookingPage = () => {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -96,10 +97,8 @@ const BookingPage = () => {
                 checkOut: searchDates.checkOut,
                 totalPrice: selectedRoom.price // Simplified
             });
-            alert("Booking submitted successfully! Our team will contact you for confirmation.");
-            setSelectedRoom(null);
-            setBookingData({ guestName: '', email: '', phone: '', guests: 2 }); // Reset form
             fetchOccupiedDates(); // Refresh availability
+            navigate('/confirmation', { state: { ...bookingData, roomName: selectedRoom.name } });
         } catch (err) {
             alert(err.response?.data?.message || "Error submitting booking");
         }
