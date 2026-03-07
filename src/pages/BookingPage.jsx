@@ -89,7 +89,7 @@ const BookingPage = () => {
         }
 
         try {
-            const res = await axios.post(`${process.env.VITE_API_URI}/api/bookings`, {
+            const res = await axios.post(`${import.meta.env.VITE_API_URI}/api/bookings`, {
                 roomId: selectedRoom._id,
                 ...bookingData,
                 checkIn: searchDates.checkIn,

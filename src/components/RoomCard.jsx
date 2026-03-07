@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const RoomCard = ({ room }) => {
+  const navigate = useNavigate();
   return (
     <motion.div 
       whileHover={{ y: -10 }}
@@ -38,7 +40,10 @@ const RoomCard = ({ room }) => {
           <button className="text-[10px] tracking-[0.2em] font-sans uppercase text-charcoal border-b border-charcoal pb-1 hover:text-gold hover:border-gold transition-colors">
             VIEW DETAILS
           </button>
-          <button className="text-[10px] tracking-[0.2em] font-sans uppercase text-gold border-b border-gold pb-1 hover:text-charcoal hover:border-charcoal transition-colors">
+          <button 
+            onClick={() => navigate(`/book?roomId=${room._id}`)}
+            className="text-[10px] tracking-[0.2em] font-sans uppercase text-gold border-b border-gold pb-1 hover:text-charcoal hover:border-charcoal transition-colors"
+          >
             BOOK NOW
           </button>
         </div>
