@@ -5,6 +5,7 @@ import Hero from '../components/Hero';
 import BookingBar from '../components/BookingBar';
 import RoomCard from '../components/RoomCard';
 import InquiryForm from '../components/InquiryForm';
+import Gallery from '../components/Gallery';
 import Reviews from '../components/Reviews';
 import ContactMap from '../components/ContactMap';
 
@@ -52,6 +53,9 @@ const Home = () => {
 
       {/* Banquet Section */}
       <InquiryForm />
+
+      {/* Gallery Section */}
+      <Gallery />
 
       {/* Guest Reviews */}
       <Reviews />

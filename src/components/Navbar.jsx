@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,12 +16,25 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Handle hash scrolling
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   const navLinks = [
-    { name: 'HOME', href: '#' },
-    { name: 'ROOMS', href: '#rooms' },
-    { name: 'BANQUET', href: '#banquet' },
-    { name: 'GALLERY', href: '#gallery' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'HOME', href: '/' },
+    { name: 'ROOMS', href: '/#rooms' },
+    { name: 'BANQUET', href: '/#banquet' },
+    { name: 'GALLERY', href: '/#gallery' },
+    { name: 'CONTACT', href: '/#contact' },
   ];
 
   return (
@@ -45,7 +59,7 @@ const Navbar = () => {
           {navLinks.map((link) => (
             <Link
               key={link.name}
-              to={link.href.startsWith('#') ? `/${link.href}` : link.href}
+              to={link.href}
               className={`text-xs font-sans tracking-[0.15em] hover:text-gold transition-colors duration-300 ${
                 isScrolled ? 'text-charcoal' : 'text-white'
               }`}
@@ -83,14 +97,14 @@ const Navbar = () => {
           >
             <div className="flex flex-col space-y-6 items-center">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-sm font-sans tracking-widest text-charcoal hover:text-gold"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <Link 
                 to="/book" 
